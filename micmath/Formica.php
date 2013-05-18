@@ -37,10 +37,10 @@ class Formica
             return false;
         }
         
-        foreach ($data as $id => $value) {
-            $input = $this->form->find('#' . $id, 0);
+        foreach ($data as $name => $value) {
+            $elements = $this->form->find('*[name=' . $name . ']');
             
-            Filler::fill($input, $value);
+            Filler::fill($elements, $value);
         }
         
         return (string)$this->form;
