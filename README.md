@@ -88,6 +88,12 @@ $config = array(
 $formica = new Formica($config);
 ```
 
+If you prefer you can store your form configuration in an external JSON file:
+
+```php
+$config = 'forms/signup.json';
+```
+
 ### 4. Go!
 
 To create the HTML of your prefilled form, just give your formica the form and the data. If your HTML source contains multiple forms, pass in a dom-selector string to specify which form you wish to prefill with the given data.
