@@ -1,7 +1,6 @@
 {
     "name": "micmath/formica",
-    "version": "0.0.0-pre",
-    "description": "Prefill your HTML forms.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Michael Mathews",
@@ -9,10 +8,9 @@
         }
     ],
     "autoload": {
-        "files": ["formica/Formica.php"]
+        "files": ["micmath/Formica.php"]
     },
     "require": {
         "php": ">=5.3.0"
-    },
-    "license": "MIT"
+    }
 }
