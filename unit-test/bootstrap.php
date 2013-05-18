@@ -1,3 +1,3 @@
 <?php
 
-require_once 'micmath/Formica.php';
+require_once 'vendor/autoload.php';
