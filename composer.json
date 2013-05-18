@@ -11,6 +11,7 @@
         "files": ["micmath/Formica.php"]
     },
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "sunra/php-simple-html-dom-parser": "v1.5.0"
     }
 }
