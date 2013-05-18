@@ -8,6 +8,10 @@ Project Status
 
 Currently under initial development, check back soon for releases!
 
+Tested with Travis.
+
+[![Build Status](https://travis-ci.org/micmath/formica.png)](https://travis-ci.org/micmath/formica) 
+
 Expected Usage
 ==============
 
