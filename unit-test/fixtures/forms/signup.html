@@ -1,0 +1,72 @@
+<p>
+    This is an example form, for testing purposes.
+</p>
+
+<form id="signup-form" class="form-horizontal" method="POST" action="#">
+	<fieldset>
+	
+	    <legend>Subscribe To Our Newsletter</legend> 
+	    
+        <p>
+            We are pleased to offer you a subscription to our industry-leading
+            series of newsletters, packed with articles written by some of the
+            most interesting experts in your field. <em>Subscribe today!</em>
+        </p>
+		
+		<div class="control-group">
+			<label class="control-label">First Name*</label> 
+			<div class="controls">
+				<input id="fname" name="fname" type="text" placeholder="John" class="input-xlarge" required="">
+				<p class="help-block">
+					Enter your first name (required)
+				</p>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Email Address*</label> 
+			<div class="controls">
+				<input id="email" name="email" type="text" placeholder="john@example.com" class="input-xlarge" required="">
+				<p class="help-block">
+					Enter your email address (required)
+				</p>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Topic</label> 
+			<div class="controls">
+				<select id="topic" name="topic" class="input-xlarge">
+					<option value="">Pick One...</option>
+					<option value="design">Design Trends</option>
+					<option value="technology">Technology News</option>
+					<option value="marketing">Marketing Insights</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Preferred Format</label> 
+			<div class="controls">
+				<label class="checkbox"> 
+				<input type="checkbox" name="newsletter" value="text">
+				Text Only </label>
+				<label class="checkbox"> 
+				<input type="checkbox" name="newsletter" value="html">
+				HTML </label> 
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Confirm</label> 
+			<div class="controls">
+				<button id="submit" name="submit" class="btn btn-primary">Submit</button> 
+			</div>
+		</div>
+		
+	</fieldset>
+</form>
+
+<footer>
+    Copyright &copy; 2013
+</footer>

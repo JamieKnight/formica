@@ -23,7 +23,7 @@ Formica works on web-based forms defined in the most natural format possible: a 
 
 ```php
 $html = <<<EOT
-<form id="users" id="signup-form">
+<form id="signup-form">
 	<input name="username">
 </form>
 EOT;
@@ -92,18 +92,12 @@ $config = array(
 $formica = new Formica($config);
 ```
 
-If you prefer you can store your form configuration in an external JSON file:
-
-```php
-$config = 'forms/signup.json';
-```
-
 ### 4. Go!
 
 To create the HTML of your prefilled form, just give your formica the form and the data. If your HTML source contains multiple forms, pass in a dom-selector string to specify which form you wish to prefill with the given data.
 
 ```php
-$prefilled = $formica->form($html, '#signup-form')->prefill($user);
+$prefilled = $formica->form($html, '#signup-form')->prefill($data);
 ```
 
 If you are using submitted data, formica provides features to filter and validate your data before you prefill. Pass the generated errors in along with your data and formica will add the `invalid` class to the appropriate input elements.

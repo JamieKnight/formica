@@ -1,13 +1,15 @@
 <?php
 
 /**
- * Formica: prefill your forms.
+ * Formica: prefill all the forms
  *
  * @copyright Copyright (c) 2013, Micahel Mathews <micmath@gmail.com>
  * @license   http://www.opensource.org/licenses/mit-license.php
+ * @repo      https://github.com/micmath/formica
  */
 
 use Sunra\PhpSimple\HtmlDomParser;
+include __DIR__ . '/Formica/Filler.php';
 
 /**
  * The Formica class. 
@@ -15,9 +17,32 @@ use Sunra\PhpSimple\HtmlDomParser;
 class Formica
 {
 
-    public static $dom;
+    public static $dom = null;
+    private $config = null;
+    public $form = null;
     
     function __construct($config=null) {
-        self::$dom = HtmlDomParser::str_get_html('<div>this is a test</div>');
+        $this->config = $config;
+        #self::$dom = HtmlDomParser::str_get_html('<div>this is a test</div>');
+    }
+    
+    function form($form, $selector) {
+        $this->form = HtmlDomParser::str_get_html($form)->find($selector, 0);
+        
+        return $this;
+    }
+    
+    function prefill($data, $errors=null) {
+        if ( is_null($this->form) ) {
+            return false;
+        }
+        
+        foreach ($data as $id => $value) {
+            $input = $this->form->find('#' . $id, 0);
+            
+            Filler::fill($input, $value);
+        }
+        
+        return (string)$this->form;
     }
 }
