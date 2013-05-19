@@ -12,6 +12,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 include __DIR__ . '/Formica/Filler.php';
 include __DIR__ . '/Formica/Validator.php';
+include __DIR__ . '/Formica/Filtration.php';
 
 /**
  * The Formica class. 
@@ -37,7 +38,7 @@ class Formica
     /**
      *
      */
-    function prefill($data) {
+    function prefill($data, $errors=null) {
         if ( is_null($this->form) ) {
             return false;
         }
@@ -46,6 +47,10 @@ class Formica
             $elements = $this->form->find('*[name=' . $name . ']');
             
             Filler::fill($elements, $value);
+            
+            if (!is_null($errors)) {
+                Filler::errors($elements, $errors);
+            }
         }
         
         return (string)$this->form;
@@ -55,21 +60,32 @@ class Formica
      *
      */
     function filter($data) {
-        return $data;
+        if (is_null($this->conf)) { return $data; }
+        
+        $allFiltered = array();
+        
+        foreach (array_keys($this->conf) as $fieldname) {
+            if ( $filters = $this->conf[$fieldname]['filter'] ) {
+                $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
+                $allFiltered[$fieldname] = Filtration::filter($filters, $value, $data);
+            }
+        }
+        
+        return (object)$allFiltered;
     }
     
     /**
      *
      */
-    function validate($data) {
-        if (is_null($this->conf)) { return; }
+    function validate($data, $customRules=null) {
+        if (is_null($this->conf)) { return false; }
         
         $allErrors = array();
         
         foreach (array_keys($this->conf) as $fieldname) {
             if ( $rules = $this->conf[$fieldname]['validate'] ) {
                 $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                if ($errors = Validator::getErrors($rules, $value, $data) ) {
+                if ($errors = Validator::getErrors($rules, $value, $data, $customRules) ) {
                     $allErrors[$fieldname] = $errors;
                 }
             }

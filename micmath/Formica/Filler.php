@@ -25,6 +25,23 @@ class Filler
     }
     
     /**
+     * Add error attributes to input elements that have errors.
+     */
+    static function errors($nodes, $errors) {
+        if ($nodes === null) {
+            return;
+        }
+        
+        foreach($nodes as $node) {
+            $name = $node->name;
+            if ( isset($errors->{$name}) ) {
+                $node->class = (isset($node->class))? $node->class . ' invalid' : 'invalid';
+                $node->{'data-errors'} = implode('|', $errors->{$name});
+            }
+        }
+    }
+    
+    /**
      * Populates the value attribute of matching inputs with the given value
      */
     static function text($nodes, $value) {
