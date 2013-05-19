@@ -24,6 +24,9 @@ class Filler
         self::text($nodes, $value);
     }
     
+    /**
+     * Populates the value attribute of matching inputs with the given value
+     */
     static function text($nodes, $value) {
         foreach($nodes as $node) {
             $type = $node->getAttribute('type');
@@ -33,23 +36,40 @@ class Filler
         }
     }
     
+    /**
+     * Populates the innertext of matching textareas with the given value
+     */
     static function textarea($nodes, $value) {
         foreach($nodes as $node) {
             if ($node->tag === 'textarea') { $node->innertext = $value; }
         }
     }
     
+    /**
+     * Adds the "checked" attribute to the appropriate input element, removes it from others.
+     */
     static function checkbox_radio($nodes, $value) {
         foreach($nodes as $node) {
             $type = $node->type;
-            if ($type === 'checkbox' or $type === 'radio' && $node->value === $value) { $node->checked = 'checked'; }
+            if ($type === 'checkbox' or $type === 'radio') {
+                if ($node->value === $value) { $node->checked = 'checked'; }
+                else { $node->checked = null; }
+            }
         }
     }
     
+    /**
+     * Adds the "selceted" attribute to the appropriate option element, removes it from others.
+     */
     static function select($nodes, $value) {
         foreach($nodes as $node) {
             if ($node->tag === 'select') {
-                $node->find('option[value=' . $value . ']', 0)->selected = 'selected';
+                $optionToSelect = $node->find('option[value=' . $value . ']', 0);
+                
+                if ($optionToSelect) {
+                    foreach($node->find('option') as $option) { $option->selected = null; }
+                    $optionToSelect->selected = 'selected';
+                }
             }
         }
     }

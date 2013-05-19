@@ -16,7 +16,7 @@
 		<div class="control-group">
 			<label class="control-label">First Name*</label> 
 			<div class="controls">
-				<input id="fname" name="fname" type="text" placeholder="John" class="input-xlarge" required="">
+				<input id="first_name" name="first_name" type="text" placeholder="First Name" class="input-xlarge" required="required">
 				<p class="help-block">
 					Enter your first name (required)
 				</p>
@@ -26,7 +26,7 @@
 		<div class="control-group">
 			<label class="control-label">Email Address*</label> 
 			<div class="controls">
-				<input id="email" name="email" type="text" placeholder="john@example.com" class="input-xlarge" required="">
+				<input id="email" name="email" type="text" placeholder="Email Address" class="input-xlarge" required="required">
 				<p class="help-block">
 					Enter your email address (required)
 				</p>
@@ -34,7 +34,7 @@
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">Topic</label> 
+			<label class="control-label">Topic*</label> 
 			<div class="controls">
 				<select id="topic" name="topic" class="input-xlarge">
 					<option value="">Pick One...</option>
@@ -42,18 +42,21 @@
 					<option value="technology">Technology News</option>
 					<option value="marketing">Marketing Insights</option>
 				</select>
+				<p class="help-block">
+					(required)
+				</p>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label">Preferred Format</label> 
 			<div class="controls">
+			    <label class="checkbox"> 
+				<input type="checkbox" name="newsletter" value="html" checked="checked">
+				HTML </label> 
 				<label class="checkbox"> 
 				<input type="checkbox" name="newsletter" value="text">
 				Text Only </label>
-				<label class="checkbox"> 
-				<input type="checkbox" name="newsletter" value="html">
-				HTML </label> 
 			</div>
 		</div>
 
