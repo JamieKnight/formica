@@ -9,7 +9,9 @@
  */
 
 use Sunra\PhpSimple\HtmlDomParser;
+
 include __DIR__ . '/Formica/Filler.php';
+include __DIR__ . '/Formica/Validator.php';
 
 /**
  * The Formica class. 
@@ -18,21 +20,26 @@ class Formica
 {
 
     public static $dom = null;
-    private $config = null;
+    private $conf = null;
     public $form = null;
     
-    function __construct($config=null) {
-        $this->config = $config;
-        #self::$dom = HtmlDomParser::str_get_html('<div>this is a test</div>');
+    function __construct($conf=null) {
+        $this->conf = $conf;
     }
     
+    /**
+     *
+     */
     function form($form, $selector) {
         $this->form = HtmlDomParser::str_get_html($form)->find($selector, 0);
         
         return $this;
     }
     
-    function prefill($data, $errors=null) {
+    /**
+     *
+     */
+    function prefill($data) {
         if ( is_null($this->form) ) {
             return false;
         }
@@ -44,5 +51,25 @@ class Formica
         }
         
         return (string)$this->form;
+    }
+    
+    /**
+     *
+     */
+    function validate($data) {
+        if (is_null($this->conf)) { return; }
+        
+        $allErrors = array();
+        
+        foreach (array_keys($this->conf) as $fieldname) {
+            if ( $rules = $this->conf[$fieldname]['validate'] ) {
+                $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
+                if ($errors = Validator::getErrors($rules, $value, $data) ) {
+                    $allErrors[$fieldname] = $errors;
+                }
+            }
+        }
+        
+        return (object)$allErrors;
     }
 }
