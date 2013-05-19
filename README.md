@@ -8,9 +8,27 @@ Project Status
 
 Currently under initial development, check back soon for releases!
 
-Tested with Travis.
+Installation
+============
 
-[![Build Status](https://travis-ci.org/micmath/formica.png)](https://travis-ci.org/micmath/formica) 
+Formica's dependencies can be installed with [Composer](http://getcomposer.org/).
+
+```bash
+$ php composer.phar install
+```
+
+Testing
+=======
+
+Tested with Travis CI.
+
+[![Build Status](https://travis-ci.org/micmath/formica.png)](https://travis-ci.org/micmath/formica)
+
+To run the project unit tests on your own check out, [install PHPUnit](http://phpunit.de/manual/3.7/en/installation.html) and run the tests from the command line.
+
+```bash
+$ phpunit -c phpunit.xml
+```
 
 Expected Usage
 ==============
