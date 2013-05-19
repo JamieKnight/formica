@@ -138,7 +138,12 @@ if ( $errors = $formica->validate($filteredData) ) {
 You can configure your Formica with a `validate` string for each input value you expect. This string can contain one or more names of built-in validation rules. The complete list of currently supported validation rules is shown below:
 
 * required - value must be present and must not be an empty string or null
+* minlen(arg) - value must be as long or longer than the integer `arg`
+* maxlen(arg) - value must be as short or shorter than the integer `arg`
 * email - value must be a valid email address
+* url - value must be a url
+* int - value must be an integer
+* sameas(arg) - value must be the same as the input data with the name `arg`
 
 #### How to specify which validation rules to apply
 
@@ -197,7 +202,8 @@ $formica = new Formica($conf);
 
 // you need to define what it means to pass or fail your rule...
 $customRules = array(
-    'dontsaydonuts' => function($value, $data)  { // you get the value and all the data
+	// your validator gets the value, all the data, and any arg
+    'dontsaydonuts' => function($value, $data, $arg=null)  {
         return $value !== 'donuts'; // return true for valid, false for invalid
     }
 );
@@ -217,8 +223,16 @@ In this example the `$errors` object will have a `mealchoice` property defined, 
 
 You can also configure Formica with a `filter` string for each input value. This string can contain one or more names of built-in filters. The complete list of currently supported filters rules is shown below:
 
-* trim - removes whitesapce from the start and end of the value
+* trim - removes whitespace from the start and end of the value
 * strtolower - converts the value to lowercase
+* strtoupper - converts the value to uppercase
+* numeric - removes all characters not allowed in numbers
+* int - removes all characters except digits, + and - signs
+* htmlescape - HTML entity-escape '"<>& and characters with ASCII value less than 32
+* htmlspecialchars - equivalent to calling htmlspecialchars() with ENT_QUOTES set
+* striptags - removes all HTML tags
+* nl2br - inserts HTML line breaks before all newlines in a string
+
 
 #### How to specify filters to apply
 

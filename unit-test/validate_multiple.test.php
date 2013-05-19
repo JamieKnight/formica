@@ -1,6 +1,6 @@
 <?php
 
-class ValidateEmailTest extends PHPUnit_Framework_TestCase {
+class ValidateMultipleTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
     }
@@ -8,12 +8,12 @@ class ValidateEmailTest extends PHPUnit_Framework_TestCase {
     public function tearDown() {
     }
 
-    public function testShouldReturnAnErrorWhenEmailFieldIsInvalid() {
+    public function testShouldReturnAnErrorWhenAnyRuleOfMultipleIsBroken() {
         $conf = array(
-            'email'    => array('validate' => 'email'),
+            'email'    => array('validate' => 'required|email'),
         );
         
-        $data = array( 'email' => 'blah@' );
+        $data = array();
         
         $formica = new Formica($conf);
         $errors = $formica->validate($data);
@@ -22,20 +22,12 @@ class ValidateEmailTest extends PHPUnit_Framework_TestCase {
         
         $this->assertEquals(
             $errors->email[0], 
+            'required'
+        );
+        
+        $this->assertEquals(
+            $errors->email[1], 
             'email'
         );
-    }
-    
-    public function testShouldNotReturnAnErrorWhenEmailIsValid() {
-       $conf = array(
-            'email'    => array('validate' => 'email'),
-        );
-        
-        $data = array( 'email' => 'test-1@Example-mail.co.uk' );
-        
-        $formica = new Formica($conf);
-        $errors = $formica->validate($data);
-        
-        $this->assertFalse( isset($errors->email) );
     }
 }

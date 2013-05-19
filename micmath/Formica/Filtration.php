@@ -42,4 +42,46 @@ class Filtration
     static function strtolower($value, $data) {
         return strtolower($value);
     }
+    
+    /**
+     * 
+     */
+    static function strtoupper($value, $data) {
+        return strtoupper($value);
+    }
+    
+    /**
+     * 
+     */
+    static function numeric($value, $data) {
+        return filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    }
+    
+    /**
+     * HTML-escape '"<>& and characters with ASCII value less than 32
+     */
+    static function htmlescape($value, $data) {
+        return filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+    
+    /**
+     * Equivalent to calling htmlspecialchars() with ENT_QUOTES set.
+     */
+    static function htmlspecialchars($value, $data) {
+        return filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+    
+    /**
+     * Strips all HTML tags.
+     */
+    static function striptags($value, $data) {
+        return filter_var($value, FILTER_SANITIZE_STRING);
+    }
+    
+    /**
+     * Inserts HTML line breaks before all newlines in a string.
+     */
+    static function nl2br($value, $data) {
+        return nl2br($value);
+    }
 }
