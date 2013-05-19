@@ -18,8 +18,6 @@ include __DIR__ . '/Formica/Validator.php';
  */
 class Formica
 {
-
-    public static $dom = null;
     private $conf = null;
     public $form = null;
     
@@ -51,6 +49,13 @@ class Formica
         }
         
         return (string)$this->form;
+    }
+    
+    /**
+     *
+     */
+    function filter($data) {
+        return $data;
     }
     
     /**
