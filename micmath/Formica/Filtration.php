@@ -13,12 +13,15 @@
  */
 class Filtration
 {
-    static function filter($filtersSpecifier, $value, $data) {
+    static function filter($filtersSpecifier, $value, $data, $customFilters=null) {
         $filters = explode('|', $filtersSpecifier);
         $filteredValue = $value;
         
         foreach($filters as $filter) {
-            if ( is_callable(array('Filtration', $filter)) ) {
+            if ( !is_null($customFilters) && isset($customFilters[$filter]) ) {
+                $filteredValue = $customFilters[$filter]($filteredValue, $data);
+            }
+            elseif ( is_callable(array('Filtration', $filter)) ) {
                 $filteredValue = forward_static_call_array(array('Filtration', $filter), array($filteredValue, $data));
             }
         }

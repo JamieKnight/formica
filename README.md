@@ -138,7 +138,7 @@ if ( $errors = $formica->validate($filteredData) ) {
 You can configure your Formica with a `validate` string for each input value you expect. This string can contain one or more names of built-in validation rules. The complete list of currently supported validation rules is shown below:
 
 * required - value must be present and must not be an empty string or null
-* email - value must be a valid email address.
+* email - value must be a valid email address
 
 #### How to specify which validation rules to apply
 
@@ -180,7 +180,6 @@ $json = file_get_contents('forms/login.spec.json');
 $config = json_decode($json, 1);
 
 $formica = new Formica($config);
-
 ```
 
 #### Make your own validation rules!
@@ -213,3 +212,59 @@ $errors = $formica->validate($data, $customRules);
 ```
 
 In this example the `$errors` object will have a `mealchoice` property defined, because their meal choice failed your custom rule.
+
+### Filtering
+
+You can also configure Formica with a `filter` string for each input value. This string can contain one or more names of built-in filters. The complete list of currently supported filters rules is shown below:
+
+* trim - removes whitesapce from the start and end of the value
+* strtolower - converts the value to lowercase
+
+#### How to specify filters to apply
+
+To specify that you want to apply certain validation rules to input values, create a configuration object following the pattern shown below:
+
+````php
+$config = array(
+	'username' => array(
+    	'filter' => 'trim'
+    ),
+    'email' => array(
+    	'filter' => 'trim|strtolower'
+    ),
+);
+
+$formica = new Formica($config);
+$filteredData = $formica->filter($inputData);
+```
+
+### Defining custom filters
+
+Use the Formica configuration to specify which filters you wish to apply to the data when you call the `filter()` method.
+
+```php
+// note that "donutstobroccoli" is not a built in filter
+$conf = array(
+    'mealchoice' => array('filter' => 'trim|donutstobroccoli'),
+);
+
+// you need to define what your donutstobroccoli filter does
+$customFilters = array(
+    'donutstobroccoli' => function($value, $data)  {
+        if ($value === 'donuts') { return 'broccoli'; }
+        else { return $value; }
+    }
+);
+
+$inputData = array(
+    'mealchoice' => ' donuts ',
+);
+
+$formica = new Formica($conf);
+
+// pass your custom filters in with the data...
+$filteredData = $formica->filter($inputData, $customFilters);
+```
+
+In this example the `$filteredData` array will have a `mealchoice` property whose value was first filtered with trim to become "donuts" and then trimmed with your custom "donutstobroccoli" filter to become "broccoli".
+

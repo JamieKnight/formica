@@ -59,7 +59,7 @@ class Formica
     /**
      *
      */
-    function filter($data) {
+    function filter($data, $customFilters=null) {
         if (is_null($this->conf)) { return $data; }
         
         $allFiltered = array();
@@ -67,7 +67,7 @@ class Formica
         foreach (array_keys($this->conf) as $fieldname) {
             if ( $filters = $this->conf[$fieldname]['filter'] ) {
                 $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                $allFiltered[$fieldname] = Filtration::filter($filters, $value, $data);
+                $allFiltered[$fieldname] = Filtration::filter($filters, $value, $data, $customFilters);
             }
         }
         
