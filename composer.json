@@ -11,7 +11,7 @@
         }
     ],
     "autoload": {
-        "files": ["micmath/Formica.php"]
+        "files": ["source/micmath/Formica.php"]
     },
     "repositories": [
         {

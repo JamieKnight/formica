@@ -1,0 +1,14 @@
+{
+    "$name": "ucfirst(str_replace('_', ' ', $name))",
+    "$name['comment']": "idea or suggestion",
+    "*": {
+        "required": "The $name field is required."
+    },
+    "email": {
+        "required": "Your email address is required.",
+        "email": "Your email must be in a valid address."
+    },
+    "comment": {
+        "toolong": "Your $name must not be longer than 140 characters."
+    }
+}

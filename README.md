@@ -221,7 +221,7 @@ In this example the `$errors` object will have a `mealchoice` property defined, 
 
 ### Filtering
 
-You can also configure Formica with a `filter` string for each input value. This string can contain one or more names of built-in filters. The complete list of currently supported filters rules is shown below:
+You can also configure Formica with a `filter` string for each input value. This string can contain one or more names of built-in filters. The complete list of currently supported filters names is shown below:
 
 * trim - removes whitespace from the start and end of the value
 * strtolower - converts the value to lowercase

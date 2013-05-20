@@ -7,9 +7,11 @@
  * @license   http://www.opensource.org/licenses/mit-license.php
  * @repo      https://github.com/micmath/formica
  */
+ 
+namespace Formica;
 
 /**
- * The Formica_Filler class. 
+ * The \Formica\Filler class. 
  */
 class Filler
 {

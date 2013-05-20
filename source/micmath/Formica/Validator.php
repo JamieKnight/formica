@@ -8,8 +8,10 @@
  * @repo      https://github.com/micmath/formica
  */
 
+namespace Formica;
+
 /**
- * The Formica_Validator class. 
+ * The \Formica\Validator class. 
  */
 class Validator
 {
@@ -25,8 +27,8 @@ class Validator
             if ( isset($customRules[$rule]) ) {
                 $pass = $customRules[$rule]($value, $data, $arg);
             }
-            else if ( is_callable(array('Validator', $rule)) ) {
-                $pass = forward_static_call_array(array('Validator', $rule), array($value, $data, $arg));
+            else if ( is_callable(array('\Formica\Validator', $rule)) ) {
+                $pass = forward_static_call_array(array('\Formica\Validator', $rule), array($value, $data, $arg));
             }
             
             if ($pass === false) {

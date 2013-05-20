@@ -8,11 +8,11 @@
  * @repo      https://github.com/micmath/formica
  */
 
-use Sunra\PhpSimple\HtmlDomParser;
+require_once __DIR__ . '/Formica/Filler.php';
+require_once __DIR__ . '/Formica/Validator.php';
+require_once __DIR__ . '/Formica/Filtration.php';
 
-include __DIR__ . '/Formica/Filler.php';
-include __DIR__ . '/Formica/Validator.php';
-include __DIR__ . '/Formica/Filtration.php';
+use Sunra\PhpSimple\HtmlDomParser;
 
 /**
  * The Formica class. 
@@ -46,10 +46,10 @@ class Formica
         foreach ($data as $name => $value) {
             $elements = $this->form->find('*[name=' . $name . ']');
             
-            Filler::fill($elements, $value);
+            \Formica\Filler::fill($elements, $value);
             
             if (!is_null($errors)) {
-                Filler::errors($elements, $errors);
+                \Formica\Filler::errors($elements, $errors);
             }
         }
         
@@ -67,7 +67,7 @@ class Formica
         foreach (array_keys($this->conf) as $fieldname) {
             if ( $filters = $this->conf[$fieldname]['filter'] ) {
                 $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                $allFiltered[$fieldname] = Filtration::filter($filters, $value, $data, $customFilters);
+                $allFiltered[$fieldname] = \Formica\Filtration::filter($filters, $value, $data, $customFilters);
             }
         }
         
@@ -85,7 +85,7 @@ class Formica
         foreach (array_keys($this->conf) as $fieldname) {
             if ( $rules = $this->conf[$fieldname]['validate'] ) {
                 $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                if ($errors = Validator::getErrors($rules, $value, $data, $customRules) ) {
+                if ($errors = \Formica\Validator::getErrors($rules, $value, $data, $customRules) ) {
                     $allErrors[$fieldname] = $errors;
                 }
             }
