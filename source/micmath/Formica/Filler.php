@@ -8,7 +8,7 @@
  * @repo      https://github.com/micmath/formica
  */
  
-namespace Formica;
+namespace micmath\Formica;
 
 /**
  * The \Formica\Filler class. 

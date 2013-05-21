@@ -8,10 +8,10 @@
  * @repo      https://github.com/micmath/formica
  */
 
-namespace Formica;
+namespace micmath\Formica;
 
 /**
- * The \Formica\Filtration class. 
+ * The \micmath\Formica\Filtration class. 
  */
 class Filtration
 {
@@ -23,8 +23,8 @@ class Filtration
             if ( !is_null($customFilters) && isset($customFilters[$filter]) ) {
                 $filteredValue = $customFilters[$filter]($filteredValue, $data);
             }
-            elseif ( is_callable(array('\Formica\Filtration', $filter)) ) {
-                $filteredValue = forward_static_call_array(array('\Formica\Filtration', $filter), array($filteredValue, $data));
+            elseif ( is_callable(array(__NAMESPACE__ . '\Filtration', $filter)) ) {
+                $filteredValue = forward_static_call_array(array(__NAMESPACE__ . '\Filtration', $filter), array($filteredValue, $data));
             }
         }
         

@@ -1,5 +1,7 @@
 <?php
 
+use \micmath\Formica;
+
 class ConstructorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {

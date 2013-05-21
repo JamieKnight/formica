@@ -1,5 +1,7 @@
 <?php
 
+namespace micmath;
+
 /**
  * Formica: prefill all the forms
  *
@@ -46,10 +48,10 @@ class Formica
         foreach ($data as $name => $value) {
             $elements = $this->form->find('*[name=' . $name . ']');
             
-            \Formica\Filler::fill($elements, $value);
+            \micmath\Formica\Filler::fill($elements, $value);
             
             if (!is_null($errors)) {
-                \Formica\Filler::errors($elements, $errors);
+                \micmath\Formica\Filler::errors($elements, $errors);
             }
         }
         
@@ -67,7 +69,7 @@ class Formica
         foreach (array_keys($this->conf) as $fieldname) {
             if ( $filters = $this->conf[$fieldname]['filter'] ) {
                 $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                $allFiltered[$fieldname] = \Formica\Filtration::filter($filters, $value, $data, $customFilters);
+                $allFiltered[$fieldname] = \micmath\Formica\Filtration::filter($filters, $value, $data, $customFilters);
             }
         }
         
@@ -85,7 +87,7 @@ class Formica
         foreach (array_keys($this->conf) as $fieldname) {
             if ( $rules = $this->conf[$fieldname]['validate'] ) {
                 $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                if ($errors = \Formica\Validator::getErrors($rules, $value, $data, $customRules) ) {
+                if ($errors = \micmath\Formica\Validator::getErrors($rules, $value, $data, $customRules) ) {
                     $allErrors[$fieldname] = $errors;
                 }
             }

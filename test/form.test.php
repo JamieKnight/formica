@@ -1,5 +1,7 @@
 <?php
 
+use \micmath\Formica;
+
 class FormTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
