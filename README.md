@@ -30,10 +30,10 @@ To run the project unit tests on your own check out, [install PHPUnit](http://ph
 $ phpunit -c phpunit.xml
 ```
 
-Expected Usage
-==============
+Usage
+=====
 
-The following illustrates the API that formica is expected to implement.
+The following illustrates the API that formica currently implements.
 
 ### 1. Get a form
 
@@ -94,6 +94,10 @@ If you are prepopulating your form from submitted data, you can use a filtered v
 Just call the constructor.
 
 ```php
+    require_once 'vendor/autoload.php'; // provided by Composer
+    
+    use \micmath\Formica; // this project's namespace
+    
 	$formica = new Formica();
 ```
 
