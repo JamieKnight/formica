@@ -13,6 +13,7 @@ namespace micmath;
 require_once __DIR__ . '/Formica/Filler.php';
 require_once __DIR__ . '/Formica/Validator.php';
 require_once __DIR__ . '/Formica/Filtration.php';
+require_once __DIR__ . '/Formica/Template.php';
 
 use Sunra\PhpSimple\HtmlDomParser;
 

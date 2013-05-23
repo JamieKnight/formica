@@ -286,3 +286,11 @@ $filteredData = $formica->filter($inputData, $customFilters);
 
 In this example the `$filteredData` array will have a `mealchoice` property whose value was first filtered with trim to become "donuts" and then trimmed with your custom "donutstobroccoli" filter to become "broccoli".
 
+### Displaying error messages
+
+The errors object returned by the `validate()` method acts like a map of field names and error types. If you want to display human-readble messages, you can either map those types to display messages by providing the messages (possibly derived from a localisation source) in your formica configuration.
+
+```php
+$errors = $formica->validate($data);
+$messages = $formica->messages($errors);
+```
