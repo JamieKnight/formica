@@ -11,7 +11,7 @@
 namespace micmath\Formica;
 
 /**
- * The \micmath\Formica\Filtration class. 
+ * The \micmath\Formica\Template class. 
  */
 class Template
 {
