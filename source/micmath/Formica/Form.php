@@ -28,6 +28,10 @@ class Form
         return $this;
     }
 
+    /**
+     * Either a simple prefill of data into a form, or if a resultSet is given
+     * the form is prefilled from the data and an "invalid" classname is added.
+     */
     function prefill($data, $resultSet=null) {
         if (is_null($this->form)) {
             return '';
@@ -39,8 +43,14 @@ class Form
             $elements = $form->find($this->form[1], 0)->find('*[name=' . $name . ']');
             
             self::fillNodes($elements, $value);
-            
-            if (!is_null($resultSet)) {
+        }
+
+        if (!is_null($resultSet)) {
+            foreach ($resultSet->failed() as $name) {
+                $value = isset($data[$name])? $data[$name] : '';
+
+                $elements = $form->find($this->form[1], 0)->find('*[name=' . $name . ']');
+                
                 self::errors($elements, $resultSet);
             }
         }

@@ -27,8 +27,8 @@ class Template
         
         // like {{ foo }} or {{ foo|ucfirst }} or {{ foo|e|ucfirst }}
         if ( preg_match('/^([a-z]+)((?:\|[a-z_]+)+)?$/i', $expression, $matches) ) {
-            $filtered = isset(self::$vars[$matches[1]])?  self::$vars[$matches[1]] : false;
-            if ($filtered) {
+            $filtered = isset(self::$vars[$matches[1]])?  self::$vars[$matches[1]] : null;
+            if ( !is_null($filtered) ) {
                 if (count($matches) > 2) {
                     $filters = array_slice(explode('|', $matches[2]), 1);
                     foreach ($filters as $filter) {

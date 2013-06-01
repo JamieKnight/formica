@@ -1,11 +1,23 @@
 <html>
 <head>
     <title>Formica Example</title>
+
+    <style type="text/css">
+        form .invalid {
+            color: red;
+            background-color: lightyellow;
+        }
+        fieldset {
+            margin: 12px;
+            border: none;
+        }
+    </style>
+    
 </head>
 <body>
 <?php
 
-    require_once 'vendor/autoload.php';
+    require_once '../../vendor/autoload.php';
 
     use \micmath\Formica;
 
@@ -28,7 +40,7 @@ JSON;
 
     $ruleSet = Formica::rules($rules);
 
-    $input = array(
+    $input = count($_POST)? $_POST : array(
         'fname' => 'Michael',
         'email_address' => 'Bloop'
     );
@@ -40,6 +52,7 @@ JSON;
     $form = <<<HTML
 
 <form action="index.php" method="POST">
+    {{ userfeedback }}
     <fieldset>
         <label for="fname">First Name:</label>
         <input type="text" id="fname" name="fname">
@@ -50,13 +63,32 @@ JSON;
     </fieldset>
     <fieldset>
         <label for="email_address">User Name:</label>
-        <input type="email" id="email_address" name="email_address">
+        <input type="text" id="email_address" name="email_address">
     </fieldset>
     <input type="submit">
 </form>
 
 HTML;
+    
+    $userfeedback = '';
 
+    if ( count($_POST) ) {
+        if ( !$resultSet->isValid() ) {
+            $messageSet = Formica::messages($resultSet);
+            $messageSet->useLabels(array(
+                'fname' => 'first name',
+                'lname' => 'last name',
+            ));
+            $messages = $messageSet->asArray();
+
+            $userfeedback = '<ul><li>' . implode('</li><li>', $messages) . '</li></ul>';
+        }
+        else {
+            $userfeedback = '<p>That\'s valid!</p>';
+        }
+    }
+
+    $form = Formica\Template::render($form, array('userfeedback' => $userfeedback));
     $prefilledForm = Formica::prefill($form, $filteredInput, $resultSet);
 
     echo $prefilledForm;

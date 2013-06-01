@@ -36,4 +36,17 @@ class ValidateTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('[]', json_encode($resultSet->failed('email3')));
     }
 
+    public function testValidateShouldFailOnMissingRequiredInput() {
+        $ruleSet = new Formica\RuleSet();
+        $ruleSet->withRules('{ "email" : { "validate" : "required" } }');
+        
+        $inputData = array();
+        
+        $validate = new Formica\Validate();
+        $resultSet = $validate->validate($ruleSet, $inputData);
+        
+        $this->assertEquals(false, $resultSet->isValid('email'));
+        $this->assertEquals('["required"]', json_encode($resultSet->failed('email')));
+    }
+
 }

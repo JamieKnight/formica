@@ -28,6 +28,10 @@ class ResultSet
         $this->results[$name] = array($value, $isvalid, $failed);
     }
     
+    /**
+     * @param string|null $name Name of input field.
+     * @return boolean Was that field valid?
+     */
     public function isValid($name=null) {
         if (!is_null($name)) {
             return isset($this->results[$name])? $this->results[$name][1] : null;
@@ -37,6 +41,10 @@ class ResultSet
         }
     }
     
+    /**
+     * @param string|null $name Name of input field.
+     * @return array<string> Names of validators that failed. Like ['required', 'email']
+     */
     public function failed($name=null) {
         if (!is_null($name)) {
             return isset($this->results[$name])? $this->results[$name][2] : null;

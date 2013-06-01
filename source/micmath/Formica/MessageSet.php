@@ -18,6 +18,7 @@ class MessageSet
 
     public $results = null;
     public $messages = array();
+    public $labels = array();
 
     public function asArray() {
         $allMessages = array();
@@ -53,7 +54,11 @@ class MessageSet
             }
 
             if ($template) {
-                $messages[] = Template::render($template, array('name'=>$name));
+                $label = $name;
+                if ( isset($this->labels[$name]) ) {
+                    $label = $this->labels[$name];
+                }
+                $messages[] = Template::render($template, array('name' => $label));
             }
         }
         return $messages;
@@ -87,37 +92,18 @@ class MessageSet
 
     protected static $messageMap = array(
         'required' => 'The {{ name }} field is required.',
+        'email'    => 'The {{ name }} field must be an email address.',
+        'url'      => 'The {{ name }} field must be a URL.',
+        'int'      => 'The {{ name }} field must be an integer.',
     );
 
     public  function useMessages($messages) {
         $this->messages = self::json2array($messages);
     }
-    
-    // static function labels($labelMap) {
-    //     self::$labelMap = $labelMap;
-    //     return $this;
-    // }
-    
-    // static function getMessages($name, $value, $errorTypes, $messageMap=null, $labelMap=null) {
-    //     $messages = array();
-    //     foreach ($errorTypes as $errorType) {
-    //         if (!is_null($messageMap) && isset($messageMap[$errorType])) {
-    //             $messages[] = self::render($messageMap[$errorType], array('name'=>$name, 'value'=>$value, 'error'=>$errorType), $labelMap);
-    //         }
-    //         else if (array_key_exists($errorType, self::$messageMap) && isset(self::$messageMap[$errorType])) {
-    //             $messages[] = self::render(self::$messageMap[$errorType], array('name'=>$name, 'value'=>$value, 'error'=>$errorType), $labelMap);
-    //         }
-    //     }
-    //     return $messages;
-    // }
-    
-    // private static function render($message, $errorInfo, $labelMap=null) {
-    //     if (!is_null($labelMap) && isset($labelMap[$errorInfo['name']])) {
-    //         $errorInfo['name'] = $labelMap[$errorInfo['name']];
-    //     }
-    //     $message = Template::render($message, $errorInfo);
-    //     return $message;
-    // }
+
+    public  function useLabels($labels) {
+        $this->labels = self::json2array($labels);
+    }
 
     /**
      * Normalise the possible arguments passed to withRules (null, JSON string or associative array)

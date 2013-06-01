@@ -18,8 +18,9 @@ class Validate
     public function validate($ruleSet, $data) {
         $resultset = new ResultSet();
 
-        
-        foreach ($data as $key => $value) {
+        foreach (array_keys($ruleSet->rules) as $key) {
+            $value = isset($data[$key])? $data[$key] : null;
+            
             $validators = isset($ruleSet->rules[$key])? isset($ruleSet->rules[$key]['validate'])? $ruleSet->rules[$key]['validate'] : '' : '';
             $validators = explode('|', $validators);
             
@@ -39,7 +40,6 @@ class Validate
                     $failed[] = $validator;
                 }
             }
-            
             $resultset->addResult($key, $value, $isvalid, $failed);
         }
 
