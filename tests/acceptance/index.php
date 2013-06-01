@@ -52,7 +52,7 @@ JSON;
     $form = <<<HTML
 
 <form action="index.php" method="POST">
-    {{ userfeedback }}
+    {{ userfeedback|raw }}
     <fieldset>
         <label for="fname">First Name:</label>
         <input type="text" id="fname" name="fname">
@@ -74,12 +74,12 @@ HTML;
 
     if ( count($_POST) ) {
         if ( !$resultSet->isValid() ) {
-            $messageSet = Formica::messages($resultSet);
-            $messageSet->useLabels(array(
-                'fname' => 'first name',
-                'lname' => 'last name',
-            ));
-            $messages = $messageSet->asArray();
+            $messages = Formica::messages($resultSet)
+                        ->useLabels(array(
+                            'fname' => 'first name',
+                            'lname' => 'last name',
+                        ))
+                        ->asArray(2);
 
             $userfeedback = '<ul><li>' . implode('</li><li>', $messages) . '</li></ul>';
         }

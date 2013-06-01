@@ -27,16 +27,27 @@ class Template
         
         // like {{ foo }} or {{ foo|ucfirst }} or {{ foo|e|ucfirst }}
         if ( preg_match('/^([a-z]+)((?:\|[a-z_]+)+)?$/i', $expression, $matches) ) {
+        
             $filtered = isset(self::$vars[$matches[1]])?  self::$vars[$matches[1]] : null;
+            $raw = false;
+            
             if ( !is_null($filtered) ) {
                 if (count($matches) > 2) {
                     $filters = array_slice(explode('|', $matches[2]), 1);
                     foreach ($filters as $filter) {
-                        if ( is_callable(array(__NAMESPACE__ . '\\Filter', $filter)) ) {
+                        if ($filter === 'raw') {
+                            $raw = true;
+                        }
+                        elseif ( is_callable(array(__NAMESPACE__ . '\\Filter', $filter)) ) {
                             $filtered = forward_static_call_array(array(__NAMESPACE__ . '\\Filter', $filter), array($filtered));
                         }
                     }                
                 }
+                
+                if (!$raw) {
+                    $filtered = htmlspecialchars($filtered, ENT_COMPAT);
+                }
+                
                 return $filtered;
             }
         }

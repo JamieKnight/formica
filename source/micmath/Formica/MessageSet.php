@@ -20,7 +20,7 @@ class MessageSet
     public $messages = array();
     public $labels = array();
 
-    public function asArray() {
+    public function asArray($limit=null) {
         $allMessages = array();
 
         if ( is_null($this->results) ) {
@@ -30,6 +30,9 @@ class MessageSet
         foreach ($this->results->failed() as $name) {
             $messages = self::messagesFor($name);
             if (count($messages)) {
+                if ( !is_null($limit) ) {
+                    $messages = array_slice($messages, 0, $limit);
+                }
                 $allMessages = array_merge($allMessages, $messages);
             }
         }
@@ -99,10 +102,12 @@ class MessageSet
 
     public  function useMessages($messages) {
         $this->messages = self::json2array($messages);
+        return $this;
     }
 
     public  function useLabels($labels) {
         $this->labels = self::json2array($labels);
+        return $this;
     }
 
     /**

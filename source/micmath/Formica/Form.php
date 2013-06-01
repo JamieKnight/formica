@@ -96,7 +96,7 @@ class Form
         foreach($nodes as $node) {
             $type = $node->getAttribute('type');
             if ( in_array($type, array('text', 'hidden', 'search', 'email', 'url', 'tel', 'number', 'range', 'date', 'month', 'week', 'time', 'datetime', 'datetime-local', 'color')) ) {
-                $node->value = $value;
+                $node->value = htmlspecialchars($value, ENT_COMPAT);
             }
         }
     }
@@ -106,7 +106,7 @@ class Form
      */
     static function textarea($nodes, $value) {
         foreach($nodes as $node) {
-            if ($node->tag === 'textarea') { $node->innertext = $value; }
+            if ($node->tag === 'textarea') { $node->innertext = htmlspecialchars($value, ENT_COMPAT); }
         }
     }
     
