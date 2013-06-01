@@ -1,7 +1,5 @@
 <?php
 
-namespace micmath;
-
 /**
  * Formica: prefill all the forms
  *
@@ -10,91 +8,76 @@ namespace micmath;
  * @repo      https://github.com/micmath/formica
  */
 
-require_once __DIR__ . '/Formica/Filler.php';
-require_once __DIR__ . '/Formica/Validator.php';
-require_once __DIR__ . '/Formica/Filtration.php';
-require_once __DIR__ . '/Formica/Template.php';
-require_once __DIR__ . '/Formica/ErrorList.php';
+namespace micmath;
 
-use Sunra\PhpSimple\HtmlDomParser;
+spl_autoload_register(function($class) {
+    $path = __DIR__ . '/../' . implode( DIRECTORY_SEPARATOR, explode('\\', $class) );
+    
+    if ( $file = stream_resolve_include_path($path . '.php') ) {
+        require_once $file;
+    }
+});
 
 /**
- * The Formica class. 
+ * The Formica class.
  */
 class Formica
 {
-    private $conf = null;
-    public $form = null;
-    
-    function __construct($conf=null) {
-        $this->conf = $conf;
+    /**
+     * Creates and configures a new RuleSet
+     * @param string|array $rules
+     */
+    public static function rules($rules) {
+        $ruleset = new Formica\RuleSet();
+        
+        return $ruleset->withRules($rules);
     }
     
     /**
-     *
+     * Creates new Filter, passes arguments through, returns result
+     * @param Formica\RuleSet $ruleSet
+     * @param array $inputData
      */
-    function form($form, $selector) {
-        $this->form = HtmlDomParser::str_get_html($form)->find($selector, 0);
+    public static function filter(Formica\RuleSet $ruleSet, array $inputData) {
+        $filter = new Formica\Filter();
         
-        return $this;
+        return $filter->filter($ruleSet, $inputData);
     }
-    
+
     /**
-     *
+     * Creates new Filter, passes arguments through, returns result
+     * @param Formica\ResultSet $resultSet
      */
-    function prefill($data, $errors=null) {
-        if ( is_null($this->form) ) {
-            return false;
-        }
+    public static function messages(Formica\ResultSet $resultSet) {
+        $messageSet = new Formica\MessageSet();
         
-        foreach ($data as $name => $value) {
-            $elements = $this->form->find('*[name=' . $name . ']');
-            
-            \micmath\Formica\Filler::fill($elements, $value);
-            
-            if (!is_null($errors)) {
-                \micmath\Formica\Filler::errors($elements, $errors);
-            }
-        }
-        
-        return (string)$this->form;
+        return $messageSet->withResults($resultSet);
     }
-    
+
     /**
-     *
+     * @param string|Array<string> $html Either just the HTML string (and the selector is
+     * assumed to be 'form', the first form in the HTML) or a two-item array of the HTML
+     * and the slector to use.
+     * @param array $data
+     * @param Formica\ResultSet|null $resultSet
+     * @return string
      */
-    function filter($data, $customFilters=null) {
-        if (is_null($this->conf)) { return $data; }
-        
-        $allFiltered = array();
-        
-        foreach (array_keys($this->conf) as $fieldname) {
-            if ( $filters = $this->conf[$fieldname]['filter'] ) {
-                $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                $allFiltered[$fieldname] = \micmath\Formica\Filtration::filter($filters, $value, $data, $customFilters);
-            }
-        }
-        
-        return (object)$allFiltered;
+    public static function prefill($html, array $data, Formica\ResultSet $resultSet=null) {
+        $form = new Formica\Form();
+        $form->withHtml($html);
+        return $form->prefill($data, $resultSet);
     }
-    
-    /**
-     *
+
+     /**
+     * @param string|Array<string> $html Either just the HTML string (and the selector is
+     * assumed to be 'form', the first form in the HTML) or a two-item array of the HTML
+     * and the slector to use.
+     * @param array $data
+     * @param Formica\ResultSet|null $resultSet
+     * @return string
      */
-    function validate($data, $customRules=null) {
-        if (is_null($this->conf)) { return false; }
-        
-        $allErrors = array();
-        
-        foreach (array_keys($this->conf) as $fieldname) {
-            if ( $rules = $this->conf[$fieldname]['validate'] ) {
-                $value = array_key_exists($fieldname, $data)? $data[$fieldname] : null;
-                if ($errors = \micmath\Formica\Validator::getErrors($rules, $value, $data, $customRules) ) {
-                    $allErrors[$fieldname] = $errors;
-                }
-            }
-        }
-        
-        return (object)$allErrors;
+    public static function validate(Formica\RuleSet $ruleSet, array $inputData) {
+        $validate = new Formica\Validate();
+        return $validate->validate($ruleSet, $inputData);
     }
 }

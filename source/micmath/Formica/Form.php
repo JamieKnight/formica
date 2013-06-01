@@ -9,13 +9,46 @@
  */
  
 namespace micmath\Formica;
+use Sunra\PhpSimple\HtmlDomParser;
 
 /**
- * The \Formica\Filler class. 
+ * The micmath\Formica\Form class. 
  */
-class Filler
+class Form
 {
-    static function fill($nodes, $value) {
+    protected $form = null; // like [HTMLDOMTree, '#myform']
+
+    public function withHtml($formHtml) {
+        if ( is_array($formHtml) ) {
+            $this->form = array(HtmlDomParser::str_get_html($formHtml[0]), $formHtml[1]);
+        }
+        elseif ( is_string($formHtml) ) {
+            $this->form = array(HtmlDomParser::str_get_html($formHtml), 'form');
+        }
+        return $this;
+    }
+
+    function prefill($data, $resultSet=null) {
+        if (is_null($this->form)) {
+            return '';
+        }
+
+        $form = clone $this->form[0];
+
+        foreach ($data as $name => $value) {
+            $elements = $form->find($this->form[1], 0)->find('*[name=' . $name . ']');
+            
+            self::fillNodes($elements, $value);
+            
+            if (!is_null($resultSet)) {
+                self::errors($elements, $resultSet);
+            }
+        }
+        
+        return (string)$form;
+    }
+
+    protected static function fillNodes($nodes, $value) {
         if ($nodes === null) {
             return;
         }
@@ -29,16 +62,19 @@ class Filler
     /**
      * Add error attributes to input elements that have errors.
      */
-    static function errors($nodes, $errors) {
+    static function errors($nodes, $resultSet) {
         if ($nodes === null) {
             return;
         }
         
         foreach($nodes as $node) {
             $name = $node->name;
-            if ( isset($errors->{$name}) ) {
-                $node->class = (isset($node->class))? $node->class . ' invalid' : 'invalid';
-                $node->{'data-errors'} = implode('|', $errors->{$name});
+            $failed = $resultSet->failed($name);
+            if ( !$resultSet->isValid($name) ) {
+                $node->class = (isset($node->class))? $node->class . ' ' : '' . 'invalid';
+                if (count($failed)) {
+                    $node->{'data-errors'} = implode(', ', $failed);
+                }
             }
         }
     }
