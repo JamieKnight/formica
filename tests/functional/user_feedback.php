@@ -19,7 +19,7 @@
 
     require_once '../../vendor/autoload.php';
 
-    use \micmath\Formica;
+    use \formica\Formica;
 
     $rules = <<<JSON
 {

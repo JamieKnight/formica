@@ -1,6 +1,6 @@
 <?php
 
-use \micmath\Formica;
+use \formica\Formica;
 
 class RuleSetTest extends PHPUnit_Framework_TestCase {
 
@@ -8,14 +8,14 @@ class RuleSetTest extends PHPUnit_Framework_TestCase {
         $myRules = '{}';
         
         $ruleSet = new Formica\RuleSet($myRules);
-        $this->assertTrue(is_callable(array($ruleSet, 'useFilters')), 'The API defines a micmath\\Formica\\RuleSet->useFilters method.');
+        $this->assertTrue(is_callable(array($ruleSet, 'useFilters')), 'The API defines a formica\\Formica\\RuleSet->useFilters method.');
     }
     
     public function testRuleSetShouldAllowCallToUseValidators() {
         $myRules = '{}';
         
         $ruleSet = new Formica\RuleSet($myRules);
-        $this->assertTrue(is_callable(array($ruleSet, 'useValidators')), 'The API defines a micmath\\Formica\\RuleSet->useValidators method.');
+        $this->assertTrue(is_callable(array($ruleSet, 'useValidators')), 'The API defines a formica\\Formica\\RuleSet->useValidators method.');
     }
     
     public function testRuleSetShouldSetRulesAttributeWhenRulesMethodIsCalledWithArray() {

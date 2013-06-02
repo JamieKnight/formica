@@ -1,11 +1,11 @@
 <?php
 
-use \micmath\Formica;
+use \formica\Formica;
 
 class FormicaTest extends PHPUnit_Framework_TestCase {
     
     public function testAPIShouldHaveRulesMethodDefined() {
-        $this->assertTrue(is_callable('micmath\\Formica::rules'), 'The API defines a micmath\\Formica::rules method.');
+        $this->assertTrue(is_callable('formica\\Formica::rules'), 'The API defines a formica\\Formica::rules method.');
     }
     
     /**
@@ -15,11 +15,11 @@ class FormicaTest extends PHPUnit_Framework_TestCase {
         $myRules = array();
 
         $ruleSet = Formica::rules($myRules);
-        $this->assertTrue($ruleSet instanceof \micmath\Formica\RuleSet, 'The API states that the micmath\\Formica::rules method will return an object of type micmath\\Formica\\RuleSet');
+        $this->assertTrue($ruleSet instanceof \formica\Formica\RuleSet, 'The API states that the formica\\Formica::rules method will return an object of type formica\\Formica\\RuleSet');
     }
     
     public function testAPIShouldHaveFilterMethodDefined() {
-        $this->assertTrue(is_callable('micmath\\Formica::filter'), 'The API defines a micmath\\Formica::filter method.');
+        $this->assertTrue(is_callable('formica\\Formica::filter'), 'The API defines a formica\\Formica::filter method.');
     }
     
     /**
@@ -30,14 +30,14 @@ class FormicaTest extends PHPUnit_Framework_TestCase {
         $myData = array();
         
         $filteredData = Formica::filter($ruleSet, $myData);
-        $this->assertEquals($filteredData, $myData, 'The API states that the micmath\\Formica::filter method will return an array.');
+        $this->assertEquals($filteredData, $myData, 'The API states that the formica\\Formica::filter method will return an array.');
      }
 
     public function testFormicaMessagesMethodShouldCallMessageSetWithResultSet() {
         $resultSet = new Formica\ResultSet();
         $messageSet = Formica::messages($resultSet);
 
-        $this->assertTrue($messageSet instanceof \micmath\Formica\MessageSet, 'The API states that the micmath\\Formica::messages method will return an object of type micmath\\Formica\\MessageSet');
+        $this->assertTrue($messageSet instanceof \formica\Formica\MessageSet, 'The API states that the formica\\Formica::messages method will return an object of type formica\\Formica\\MessageSet');
     }
 
     public function testFormicaPrefillMethodShouldReturnString() {
@@ -47,7 +47,7 @@ class FormicaTest extends PHPUnit_Framework_TestCase {
 
         $prefilledHtmlForm = Formica::prefill($yourHtmlForm, $filteredData, $resultSet);
 
-        $this->assertTrue(is_string($prefilledHtmlForm), 'The API states that the micmath\\Formica::prefill method will return a string');
+        $this->assertTrue(is_string($prefilledHtmlForm), 'The API states that the formica\\Formica::prefill method will return a string');
     }
 
     public function testFormicaValidateMethodShouldReturnResultSet() {
@@ -55,6 +55,6 @@ class FormicaTest extends PHPUnit_Framework_TestCase {
         $filteredData = array();
         $resultSet = Formica::validate($ruleSet, $filteredData);
 
-        $this->assertTrue($resultSet instanceof \micmath\Formica\ResultSet, 'The API states that the micmath\\Formica::validate method will return an object of type micmath\\Formica\\ResultSet');
+        $this->assertTrue($resultSet instanceof \formica\Formica\ResultSet, 'The API states that the formica\\Formica::validate method will return an object of type formica\\Formica\\ResultSet');
     }
 }

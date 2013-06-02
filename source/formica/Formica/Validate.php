@@ -8,10 +8,10 @@
  * @repo      https://github.com/micmath/formica
  */
  
-namespace micmath\Formica;
+namespace formica\Formica;
 
 /**
- * The micmath\Formica\Validate class. 
+ * The formica\Formica\Validate class. 
  */
 class Validate
 {

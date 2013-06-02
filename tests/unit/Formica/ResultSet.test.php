@@ -1,6 +1,6 @@
 <?php
 
-use \micmath\Formica;
+use \formica\Formica;
 
 class ResultSetTest extends PHPUnit_Framework_TestCase {
 

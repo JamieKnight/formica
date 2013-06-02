@@ -8,10 +8,10 @@
  * @repo      https://github.com/micmath/formica
  */
  
-namespace micmath\Formica;
+namespace formica\Formica;
 
 /**
- * The micmath\Formica\Filter class. 
+ * The formica\Formica\Filter class. 
  */
 class Filter
 {

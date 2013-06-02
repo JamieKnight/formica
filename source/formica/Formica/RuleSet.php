@@ -8,10 +8,10 @@
  * @repo      https://github.com/micmath/formica
  */
  
-namespace micmath\Formica;
+namespace formica\Formica;
 
 /**
- * The micmath\Formica\RuleSet class. 
+ * The formica\Formica\RuleSet class. 
  */
 class RuleSet
 {

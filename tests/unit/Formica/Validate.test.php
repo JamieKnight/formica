@@ -1,16 +1,16 @@
 <?php
 
-use \micmath\Formica;
+use \formica\Formica;
 
 class ValidateTest extends PHPUnit_Framework_TestCase {
 
     public function testValidateShouldApplyRequired() {
-        $ruleSet = new micmath\Formica\RuleSet();
+        $ruleSet = new Formica\RuleSet();
         $ruleSet->withRules('{ "fname" : { "validate" : "required" }, "email" : { "validate" : "required" } }');
         
-        $inputData = array( 'fname' => '', 'email' => 'micmath@example.com' );
+        $inputData = array( 'fname' => '', 'email' => 'formica@example.com' );
         
-        $validate = new micmath\Formica\Validate();
+        $validate = new Formica\Validate();
         $resultSet = $validate->validate($ruleSet, $inputData);
         
         $this->assertEquals(false, $resultSet->isValid('fname'));
@@ -21,7 +21,7 @@ class ValidateTest extends PHPUnit_Framework_TestCase {
         $ruleSet = new Formica\RuleSet();
         $ruleSet->withRules('{ "email1" : { "validate" : "required|email" }, "email2" : { "validate" : "required|email"}, "email3" : { "validate" : "required|email" } }');
         
-        $inputData = array( 'email1' => '', 'email2' => 'micmath', 'email3' => 'micmath@example.com' );
+        $inputData = array( 'email1' => '', 'email2' => 'formica', 'email3' => 'formica@example.com' );
         
         $validate = new Formica\Validate();
         $resultSet = $validate->validate($ruleSet, $inputData);

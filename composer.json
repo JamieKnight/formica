@@ -1,5 +1,5 @@
 {
-    "name": "micmath/formica",
+    "name": "formica/formica",
     "description": "A PHP library to prefill HTML-based web forms on the server.",
     "keywords": ["form", "data", "HTML", "prefill", "prepopulate", "validation", "filter"],
     "type": "library",
@@ -11,7 +11,7 @@
         }
     ],
     "autoload": {
-        "files": ["source/micmath/Formica.php"]
+        "files": ["source/formica/Formica.php"]
     },
     "repositories": [
         {

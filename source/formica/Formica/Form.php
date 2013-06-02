@@ -8,11 +8,11 @@
  * @repo      https://github.com/micmath/formica
  */
  
-namespace micmath\Formica;
+namespace formica\Formica;
 use Sunra\PhpSimple\HtmlDomParser;
 
 /**
- * The micmath\Formica\Form class. 
+ * The formica\Formica\Form class. 
  */
 class Form
 {

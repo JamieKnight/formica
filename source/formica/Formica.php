@@ -8,7 +8,7 @@
  * @repo      https://github.com/micmath/formica
  */
 
-namespace micmath;
+namespace formica;
 
 spl_autoload_register(function($class) {
     $path = __DIR__ . '/../' . implode( DIRECTORY_SEPARATOR, explode('\\', $class) );

@@ -8,10 +8,10 @@
  * @repo      https://github.com/micmath/formica
  */
 
-namespace micmath\Formica;
+namespace formica\Formica;
 
 /**
- * The micmath\Formica\MessageSet class. 
+ * The formica\Formica\MessageSet class. 
  */
 class MessageSet
 {
