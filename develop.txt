@@ -1,20 +1,55 @@
-Update the composer dependencies
-================================
+# Developer Guide for the Formica Project
+
+This guide is intended for developers wishing to contribute to Formica. If you
+only wish to use Formica, refer to the README in this project.
+
+## Source
+
+Clone the repo from github
+--------------------------
+
+    git clone git@github.com:micmath/formica.git formica
+
+   
+## Dependencies
+
+Update the project dependencies
+--------------------------------
+
+use Composer to install all required (path to your phar file may vary)
 
     composer.phar update
 
-Run the unit tests
-==================
 
-    phpunit -c phpunit.xml
+## Testing
 
-Manual acceptance tests
-=======================
+Automated unit tests
+--------------------
 
-from the project root run (requires PHP 5.4 or later)
+in a terminal, run all the unit tests (path to your phpunit may vary)
+
+    ~/pear/bin/phpunit -c phpunit.xml
+
+
+Manual functional tests
+-----------------------
+
+from the project root run a php-enabled web server (requires PHP 5.4)
 
     php -S localhost:8000
 
-In a web browser visit:
+in a web browser visit a test page, eg...
 
-    http://localhost:8000/tests/acceptance/index.php
+    http://localhost:8000/tests/functional/user_feedback.php
+
+
+Automated functional tests
+--------------------------
+
+initialise the Selenium Server 2 java process (path to your jar file may vary)
+
+    java -jar ~/lib/java/selenium-server-standalone-2.33.0.jar
+
+via the FireFox Selenium IDE extension, open the relevant test suite, eg...
+
+    tests/functional/user_feedback.php

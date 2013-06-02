@@ -51,7 +51,7 @@ JSON;
 
     $form = <<<HTML
 
-<form action="index.php" method="POST">
+<form action="/tests/functional/user_feedback.php" method="POST">
     {{ userfeedback|raw }}
     <fieldset>
         <label for="fname">First Name:</label>
@@ -81,7 +81,7 @@ HTML;
                         ))
                         ->asArray(2);
 
-            $userfeedback = '<ul><li>' . implode('</li><li>', $messages) . '</li></ul>';
+            $userfeedback = '<ul id="userfeedback"><li>' . implode('</li><li>', $messages) . '</li></ul>';
         }
         else {
             $userfeedback = '<p>That\'s valid!</p>';
