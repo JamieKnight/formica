@@ -22,7 +22,7 @@
     use \formica\Formica;
 
     $ruleSet = Formica::rules('../fixtures/forms/contact.json');
-    var_dump($_POST);
+ 
     $input = count($_POST)? $_POST : array(
         'name' => 'Michael',
         'email' => 'Bloop',

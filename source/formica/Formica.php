@@ -38,7 +38,7 @@ class Formica
      * @param Formica\RuleSet $ruleSet
      * @param array $inputData
      */
-    public static function filter(Formica\RuleSet $ruleSet, array $inputData) {
+    public static function filter(Formica\RuleSet $ruleSet, $inputData) {
         $filter = new Formica\Filter();
         
         return $filter->filter($ruleSet, $inputData);
@@ -62,7 +62,7 @@ class Formica
      * @param Formica\ResultSet|null $resultSet
      * @return string
      */
-    public static function prefill($html, array $data, Formica\ResultSet $resultSet=null) {
+    public static function prefill($html, $data, Formica\ResultSet $resultSet=null) {
         $form = new Formica\Form();
         $form->withHtml($html);
         return $form->prefill($data, $resultSet);
@@ -76,7 +76,7 @@ class Formica
      * @param Formica\ResultSet|null $resultSet
      * @return string
      */
-    public static function validate(Formica\RuleSet $ruleSet, array $inputData) {
+    public static function validate(Formica\RuleSet $ruleSet, $inputData) {
         $validate = new Formica\Validate();
         return $validate->validate($ruleSet, $inputData);
     }
