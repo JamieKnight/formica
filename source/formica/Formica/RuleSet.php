@@ -42,6 +42,9 @@ class RuleSet
      *  $myRuleSet->withRules($rules);
      */
     public function withRules($rules=null) {
+        if ( is_string($rules) && preg_match('/\.json$/i', $rules) ) {
+            $rules = file_get_contents($rules);
+        }
         $this->rules = self::json2array($rules);
         return $this;
     }

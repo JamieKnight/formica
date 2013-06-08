@@ -1,0 +1,13 @@
+{
+    "name" : {
+        "filter" : "trim",
+        "validate" : "required"
+    },
+    "email" : {
+        "filter" : "lower|trim",
+        "validate" : "required|email"
+    },
+    "interests" : {
+        "validate" : "required"
+    }
+}

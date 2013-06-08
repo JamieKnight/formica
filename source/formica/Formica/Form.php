@@ -43,6 +43,9 @@ class Form
             $elements = $form->find($this->form[1], 0)->find('*[name=' . $name . ']');
             
             self::fillNodes($elements, $value);
+            
+            $elements = $form->find($this->form[1], 0)->find('*[name=' . $name . '[]]');
+            self::fillNodes($elements, $value);
         }
 
         if (!is_null($resultSet)) {
@@ -117,8 +120,14 @@ class Form
         foreach($nodes as $node) {
             $type = $node->type;
             if ($type === 'checkbox' or $type === 'radio') {
-                if ($node->value === $value) { $node->checked = 'checked'; }
-                else { $node->checked = null; }
+                if (is_array($value)) {
+                    if (in_array($node->value, $value)) { $node->checked = 'checked'; }
+                    else { $node->checked = null; }
+                }
+                else {
+                    if ($node->value === $value) { $node->checked = 'checked'; }
+                    else { $node->checked = null; }
+                }
             }
         }
     }

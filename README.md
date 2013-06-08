@@ -33,23 +33,28 @@ $ phpunit -c phpunit.xml
 Formica in Five-Minutes
 =======================
 
-First define a ruleset. Always start with this.
+First define a ruleset. Always start with this. List any of the built-in filters or validators you would like to apply.
 ```php
-// Rules can be formatted as either JSON or PHP associative array.
-$ruleSet = Formica::rules($myRules);
+// Rules can be formatted as JSON string or PHP array.
+$ruleSet = Formica::rules(array(
+	'email_address' => array(
+		'filter' => 'trim|lower',
+		'validate' => 'required|email',
+	),
+));
 
-// Optionally use custom filters and validators, as either JSON or PHP.
+// Optionally add your own custom filters and validators.
 $ruleSet->useFilters($myCustomFilters);
 $ruleSet->useValidators($myCustomValidators);
 ```
 
-You can filter your input data, using the filters in the ruleset you just made.
+Now you can filter some input data, using the filters in the ruleset you just made.
 
 ```php
 $filteredData = Formica::filter($ruleSet, $submittedData);
 ```
 
-Validating your data against a ruleset gives you a result-set. This has lots of uses.
+Validating your data against a ruleset gives you a resultset. This has lots of uses.
 
 ```php
 $resultSet = Formica::validate($ruleSet, $filteredData); 
@@ -69,7 +74,7 @@ $failedFields = $resultSet->failed();
 $failedValidators = $resultSet->failed('email_address');
 ```
 
-Turn a result-set into a message-set and you'll be able to display nice human-readable messages to the end user.
+Turn a resultset into a messageset and you'll be able to display nice human-readable messages to the end user.
 
 ```php
 $messageSet = Formica::messages($resultSet);
@@ -111,7 +116,7 @@ HTML already exists, use it (Formica does).
 $prefilledHtmlForm = Formica::prefill($yourHtmlForm, $filteredData);
 ```
 
-Want to add a HTML class named "invalid" to all the inputs that are invalid? We got that.
+Want to add an HTML class named "invalid" to all the inputs that are invalid? We got that.
 
 ```php
 $prefilledHtmlForm = Formica::prefill($yourHtmlForm, $filteredData, $resultSet);
@@ -131,7 +136,71 @@ Table of Contents
 Creating A Ruleset
 ==================
 
-TBC
+#### RuleSet Overview
+
+A RuleSet represents some specification (rules) you've asserted about the handling of input data. For example if you are expecting a user to submit their email address, you might specify to Formica that the rules for this data are: the field named "email_address" is a *required*  field and that it must be a well-formed *email* address. In addition you could specify that any leading or trailing whitespace be *trim*med and the address *lower*cased before it is considered. This specification can be expressed as either JSON or a PHP array, but must then be presented to Formica by using the `Formica::rules()` function.
+
+Rules have the general format of: `{ "somefieldname" : { "filter": "some|filter|names", "validate": "some|validator|names" } ... }`, where the names of validators and/or filters represent any of the built-in validators and filters, or your own custom validator name(s) or filter names(s). Notice that multiple names are joined by a pipe "|" character and are evaluated in order from left to right.
+
+#### Example of Rules specified as an Array
+```php
+$registrationRules = array(
+	'name' => array(
+		'validate' => 'required',
+	),
+	'email_address' => array(
+		'filter' => 'trim|lower',
+		'validate' => 'required|email',
+	),
+);
+
+$ruleSet = Formica::rules($registrationRules);
+```
+
+#### Example of Rules specified as JSON in an External File
+
+Formica supports rules stored as JSON in a external files, like the example below, named `views/forms/registration.json`. Note that this, and all JSON used by Formica, will eventually be decoded by [the following PHP](http://php.net/manual/en/function.json-decode.php): `json_decode($json, true)` and therefore is expected to be encoded as UTF-8 with no Byte Order Mark (BOM).
+
+```json
+{
+	"name" : [
+		"validate" : "required"
+	],
+	"email_address" : [
+		"filter" : "trim|lower",
+		"validate: : "required|email"
+	]
+}
+```
+
+#### Example of a RuleSet created from JSON in an External File
+
+Keeping your rules organised in separate JSON files and folders is simple: just pass the filepath of your JSON rules to the `rules()` function and you're ready to go. Notice that Formica *requires* the `.json` file extension on all JSON filepaths you pass to it.
+
+```php
+// ensure that the json file is utf-8, without a BOM.
+$ruleSet = Formica::rules('views/forms/registration.json');
+```
+
+#### Example of RuleSet created from Raw JSON String
+
+If you prefer you can pass a raw JSON string directly to the `rules()` function. This example shows a JSON string defined in a [PHP heredoc](http://www.php.net/manual/en/language.types.string.php#language.types.string.syntax.heredoc) but, naturally, you could read your JSON from any source available to PHP.
+
+```php
+$json = <<<JSON
+{
+	"name" : [
+		"validate" : "required"
+	],
+	"email_address" : [
+		"filter" : "trim|lower",
+		"validate: : "required|email"
+	]
+}
+JSON;
+
+$ruleSet = Formica::rules($json);
+```
 
 <a name="filter"></a>
 Filtering Data

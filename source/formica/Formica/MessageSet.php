@@ -101,11 +101,17 @@ class MessageSet
     );
 
     public  function useMessages($messages) {
+        if ( is_string($messages) && preg_match('/\.json$/i', $messages) ) {
+            $messages = file_get_contents($messages);
+        }
         $this->messages = self::json2array($messages);
         return $this;
     }
 
     public  function useLabels($labels) {
+        if ( is_string($labels) && preg_match('/\.json$/i', $labels) ) {
+            $labels = file_get_contents($labels);
+        }
         $this->labels = self::json2array($labels);
         return $this;
     }

@@ -1,0 +1,63 @@
+<div id="contact">
+    <h1>Contact Us</h1>
+    <h2>Fill out the form below to get in touch with us!</h2>
+    
+    {{ feedback|raw }}
+    
+    <form method="post" action="/tests/functional/contact.php">
+        <div>
+            <label for="name">Name* </label>
+            <input type="text" id="name" name="name" value="" xrequired="required" autofocus="autofocus">
+        </div>
+        <div>
+            <label for="email">Email Address* </label>
+            <input type="text" id="email" name="email" data-filter="trim|lower" data-validate="required|email">
+        </div>
+        <div>
+            <label for="callback">Would you like us to call you? </label>
+            <input type="checkbox" id="callback" name="callback" value="yes">
+        </div>
+        <div>
+            <label for="telephone">Telephone </label>
+            <input type="tel" id="telephone" name="telephone" value="">
+        </div>
+        
+        <div>
+            <label for="time">Best callback time </label>
+            
+            <input type="radio" name="time" value="morning" id="time_morning">
+            <label for="time_morning"> Morning</label>
+            
+            <input type="radio" name="time" value="afternoon" id="time_afternoon">
+            <label for="time_afternoon"> Afternoon</label>
+            
+            <input type="radio" name="time" value="evening" id="time_evening">
+            <label for="time_evening"> Evening</label>
+        </div>
+        
+        <div>
+            <label for="subject">Subject </label>
+            <select id="subject" name="subject">
+                <option value="technical">Technical</option>
+                <option value="sales">Sales</option>
+                <option value="support">Support</option>
+            </select>
+        </div>
+        
+        <div>
+        Check all that apply:<br>
+        <input type="checkbox" name="interests[]" id="interests_marketing" value="marketing"> <label for="interests_marketing">Marketing</label>
+        <input type="checkbox" name="interests[]" id="interests_engineering" value="engineering"> <label for="interests_engineering">Engineering</label>
+        <input type="checkbox" name="interests[]" id="interests_management" value="management"> <label for="interests_management">Management</label>
+        <input type="checkbox" name="interests[]" id="interests_other" value="other"> <label for="interests_other">Other</label>
+        </div>
+        
+        <div>
+            <label for="message">Message:* </label>
+            <textarea id="message" name="message" required="required" data-minlength="20"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>

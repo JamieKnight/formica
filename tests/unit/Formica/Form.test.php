@@ -2,7 +2,8 @@
 
 use \formica\Formica;
 
-class FormTest extends PHPUnit_Framework_TestCase {
+class FormTest extends PHPUnit_Framework_TestCase
+{
 
     public function testPrefillerShouldAddValuesToTextInput() {
         $filteredData = array( 'fname' => 'Michael' );
